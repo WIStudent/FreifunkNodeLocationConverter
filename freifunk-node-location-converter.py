@@ -58,13 +58,18 @@ def convert_json(logger, json_data):
     data = {'timestamp': int(time.time())}
     new_nodes = {}
     for node in json_data['allTheRouters']:
+        print(node)
+        print(type(node['lat']))
         online = (node['status'] == 'online')
-        new_nodes[node['id']] = {
-            'online': online,
-            'lat':    float(node['lat']),
-            'lon':    float(node['long']),
-            'name':   node['name']
-        }
+        try:
+            new_nodes[node['id']] = {
+                'online': online,
+                'lat':    float(node['lat']),
+                'lon':    float(node['long']),
+                'name':   node['name']
+            }
+        except ValueError:
+            logger.log("Node " + node['id'] + " in community " + node['community'] + " has invalid lat or lon!")
     logger.log(str(len(new_nodes)) + " nodes found.")
     data['nodes'] = new_nodes
     return data
@@ -87,6 +92,7 @@ def main():
 
     # Setup logger
     log_to_console = '-p' in sys.argv
+    log_to_console = True
     logger = Logger(LOG_OUTPUT_FILE, log_to_console)
 
     json_data = download_node_location_file(logger)
