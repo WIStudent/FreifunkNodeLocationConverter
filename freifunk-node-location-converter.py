@@ -59,12 +59,15 @@ def convert_json(logger, json_data):
     new_nodes = {}
     for node in json_data['allTheRouters']:
         online = (node['status'] == 'online')
-        new_nodes[node['id']] = {
-            'online': online,
-            'lat':    float(node['lat']),
-            'lon':    float(node['long']),
-            'name':   node['name']
-        }
+        try:
+            new_nodes[node['id']] = {
+                'online': online,
+                'lat':    float(node['lat']),
+                'lon':    float(node['long']),
+                'name':   node['name']
+            }
+        except ValueError:
+            logger.log("Node " + node['id'] + " in community " + node['community'] + " has invalid lat or lon!")
     logger.log(str(len(new_nodes)) + " nodes found.")
     data['nodes'] = new_nodes
     return data
