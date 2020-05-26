@@ -90,7 +90,6 @@ def main():
 
     # Setup logger
     log_to_console = '-p' in sys.argv
-    log_to_console = True
     logger = Logger(LOG_OUTPUT_FILE, log_to_console)
 
     json_data = download_node_location_file(logger)
