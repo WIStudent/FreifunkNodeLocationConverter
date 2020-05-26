@@ -58,8 +58,6 @@ def convert_json(logger, json_data):
     data = {'timestamp': int(time.time())}
     new_nodes = {}
     for node in json_data['allTheRouters']:
-        print(node)
-        print(type(node['lat']))
         online = (node['status'] == 'online')
         try:
             new_nodes[node['id']] = {
