@@ -23,10 +23,10 @@ jobs:
     - name: Run script
       run: |
         pipenv run python3 freifunk-node-location-converter.py
-    - uses: actions/upload-artefact@v2
+    - uses: actions/upload-artifact@v2
       with:
         path: nodes.json
-    - uses: actions/upload-artefact@v2
+    - uses: actions/upload-artifact@v2
       with:
         path: nodes.json.gz
     
